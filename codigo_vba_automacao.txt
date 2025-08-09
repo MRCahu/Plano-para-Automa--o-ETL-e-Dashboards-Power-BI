@@ -1,0 +1,160 @@
+
+Sub AutomatizarRelatorio()
+    '
+    ' Macro para automatizar geração de relatórios
+    ' Criada pelo Sistema de Automação de Dados
+    '
+    
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim dataRange As Range
+    
+    ' Definir planilha de trabalho
+    Set ws = ActiveSheet
+    
+    ' Encontrar última linha com dados
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+    
+    ' Definir intervalo de dados
+    Set dataRange = ws.Range("A1:Z" & lastRow)
+    
+    ' Aplicar formatação automática
+    Call FormatarDados(dataRange)
+    
+    ' Criar tabela dinâmica
+    Call CriarTabelaDinamica(dataRange)
+    
+    ' Gerar gráficos
+    Call GerarGraficos(dataRange)
+    
+    MsgBox "Relatório automatizado gerado com sucesso!", vbInformation
+    
+End Sub
+
+Sub FormatarDados(dataRange As Range)
+    '
+    ' Formatar dados automaticamente
+    '
+    
+    With dataRange
+        .Font.Name = "Calibri"
+        .Font.Size = 11
+        .Borders.LineStyle = xlContinuous
+        .Borders.Weight = xlThin
+    End With
+    
+    ' Formatação do cabeçalho
+    With dataRange.Rows(1)
+        .Font.Bold = True
+        .Interior.Color = RGB(54, 96, 146)
+        .Font.Color = RGB(255, 255, 255)
+        .HorizontalAlignment = xlCenter
+    End With
+    
+    ' Auto-ajustar colunas
+    dataRange.Columns.AutoFit
+    
+End Sub
+
+Sub CriarTabelaDinamica(dataRange As Range)
+    '
+    ' Criar tabela dinâmica automaticamente
+    '
+    
+    Dim pt As PivotTable
+    Dim pc As PivotCache
+    Dim newWs As Worksheet
+    
+    ' Criar nova planilha para tabela dinâmica
+    Set newWs = Worksheets.Add
+    newWs.Name = "Tabela_Dinamica_" & Format(Now, "hhmmss")
+    
+    ' Criar cache da tabela dinâmica
+    Set pc = ActiveWorkbook.PivotCaches.Create( _
+        SourceType:=xlDatabase, _
+        SourceData:=dataRange)
+    
+    ' Criar tabela dinâmica
+    Set pt = pc.CreatePivotTable( _
+        TableDestination:=newWs.Range("A1"), _
+        TableName:="TabelaDinamica1")
+    
+    ' Configurar campos da tabela dinâmica
+    With pt
+        .PivotFields("Departamento").Orientation = xlRowField
+        .PivotFields("Categoria").Orientation = xlRowField
+        .PivotFields("Valor").Orientation = xlDataField
+        .PivotFields("Sum of Valor").NumberFormat = "R$ #,##0.00"
+    End With
+    
+End Sub
+
+Sub GerarGraficos(dataRange As Range)
+    '
+    ' Gerar gráficos automaticamente
+    '
+    
+    Dim chartObj As ChartObject
+    Dim newWs As Worksheet
+    
+    ' Criar nova planilha para gráficos
+    Set newWs = Worksheets.Add
+    newWs.Name = "Graficos_" & Format(Now, "hhmmss")
+    
+    ' Criar gráfico de colunas
+    Set chartObj = newWs.ChartObjects.Add(50, 50, 400, 300)
+    
+    With chartObj.Chart
+        .SetSourceData dataRange
+        .ChartType = xlColumnClustered
+        .HasTitle = True
+        .ChartTitle.Text = "Análise de Dados - " & Format(Now, "dd/mm/yyyy")
+        .Axes(xlCategory, xlPrimary).HasTitle = True
+        .Axes(xlCategory, xlPrimary).AxisTitle.Text = "Categorias"
+        .Axes(xlValue, xlPrimary).HasTitle = True
+        .Axes(xlValue, xlPrimary).AxisTitle.Text = "Valores"
+    End With
+    
+End Sub
+
+Sub ExportarParaPDF()
+    '
+    ' Exportar planilha para PDF
+    '
+    
+    Dim fileName As String
+    fileName = ThisWorkbook.Path & "\Relatorio_" & Format(Now, "yyyy-mm-dd_hhmmss") & ".pdf"
+    
+    ActiveSheet.ExportAsFixedFormat _
+        Type:=xlTypePDF, _
+        fileName:=fileName, _
+        Quality:=xlQualityStandard, _
+        IncludeDocProps:=True, _
+        IgnorePrintAreas:=False, _
+        OpenAfterPublish:=True
+    
+    MsgBox "Relatório exportado para: " & fileName, vbInformation
+    
+End Sub
+
+Sub AtualizarDadosAutomaticamente()
+    '
+    ' Atualizar dados de fonte externa
+    '
+    
+    Dim conn As WorkbookConnection
+    
+    ' Atualizar todas as conexões
+    For Each conn In ThisWorkbook.Connections
+        conn.Refresh
+    Next conn
+    
+    ' Atualizar tabelas dinâmicas
+    Dim pt As PivotTable
+    For Each pt In ActiveSheet.PivotTables
+        pt.RefreshTable
+    Next pt
+    
+    MsgBox "Dados atualizados com sucesso!", vbInformation
+    
+End Sub

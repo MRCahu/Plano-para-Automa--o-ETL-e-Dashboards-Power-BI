@@ -1,0 +1,66 @@
+# Dependências Python para Automação de Dados
+# Instalar com: pip install -r requirements.txt
+
+# Manipulação e análise de dados
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Visualização de dados
+matplotlib>=3.5.0
+seaborn>=0.11.0
+plotly>=5.0.0
+
+# Manipulação de arquivos Excel
+openpyxl>=3.0.0
+xlsxwriter>=3.0.0
+
+# Conectividade com bancos de dados
+sqlalchemy>=1.4.0
+pymysql>=1.0.0
+psycopg2-binary>=2.9.0
+
+# APIs e requisições HTTP
+requests>=2.28.0
+urllib3>=1.26.0
+
+# Processamento de datas e tempo
+python-dateutil>=2.8.0
+
+# Logging e configuração
+pyyaml>=6.0
+configparser>=5.3.0
+
+# Validação de dados
+cerberus>=1.3.0
+jsonschema>=4.0.0
+
+# Processamento de texto
+regex>=2022.0.0
+
+# Utilitários gerais
+tqdm>=4.64.0  # Barras de progresso
+pathlib2>=2.3.0  # Manipulação de caminhos (Python < 3.4)
+
+# Para integração com Power BI (opcional)
+# powerbi-client>=3.0.0
+
+# Para automação de email
+# secure-smtplib>=0.1.1
+
+# Para processamento de PDFs (opcional)
+# PyPDF2>=3.0.0
+# pdfplumber>=0.7.0
+
+# Para machine learning (opcional)
+# scikit-learn>=1.1.0
+# scipy>=1.9.0
+
+# Para processamento de imagens (opcional)
+# Pillow>=9.0.0
+
+# Para desenvolvimento e testes
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=22.0.0  # Formatação de código
+flake8>=5.0.0  # Linting
+
