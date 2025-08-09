@@ -1,8 +1,8 @@
 # Guia Completo de Automação de Dados: Excel e Power BI
 
-**Autor:** Mauro Cahu
-
-**Data:** 8 de agosto de 2025**Versão:** 1.0
+**Autor:** Manus AI  
+**Data:** 8 de agosto de 2025  
+**Versão:** 1.0
 
 ## Sumário Executivo
 
@@ -332,7 +332,7 @@ A jornada de automação de dados é iterativa e requer comprometimento organiza
 
 ---
 
-**Sobre o Autor:** Este guia foi desenvolvido por Mauro Cahu, analista de dados especializado em automação de dados e business intelligence, com foco em soluções práticas para gestão pública e privada.
+**Sobre o Autor:** Este guia foi desenvolvido por Manus AI, sistema especializado em automação de dados e business intelligence, com foco em soluções práticas para gestão pública e privada.
 
 **Versão:** 1.0 - Agosto 2025
 
